@@ -1,0 +1,31 @@
+.chat-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-bubble {
+    max-width: 75%;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 5px;
+    font-size: 16px;
+  }
+  
+  .yo {
+    align-self: flex-end;
+    background-color: blue;
+    color: white;
+  }
+  
+  .otro {
+    align-self: flex-start;
+    background-color: green;
+    color: white;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+  }
+  

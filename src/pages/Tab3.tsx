@@ -1,25 +1,128 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { 
+  IonButton, 
+  IonContent, 
+  IonHeader, 
+  IonInput, 
+  IonItem, 
+  IonLabel, 
+  IonPage, 
+  IonTitle, 
+  IonToolbar, 
+  useIonRouter,
+  IonLoading,
+  useIonToast
+} from '@ionic/react';
+import React, { useState } from 'react';
 import './Tab3.css';
 
-const Tab3: React.FC = () => {
+const Login: React.FC = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [present] = useIonToast();
+  const router = useIonRouter();
+
+  // Base de datos de usuarios (en producción usar backend)
+  const usersDB = [
+    { username: 'ana', password: 'ana1234' },
+    { username: 'maria', password: 'maria1234' },
+    { username: 'evelyn', password: 'evelyn1234' },
+    { username: 'rosa', password: 'rosa1234' }
+  ];
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Limpiar espacios en blanco
+    const cleanUsername = username.trim();
+    const cleanPassword = password.trim();
+
+    // Verificación síncrona (para demo)
+    const user = usersDB.find(u => 
+      u.username === cleanUsername && u.password === cleanPassword
+    );
+
+    setTimeout(() => {
+      if (user) {
+        // Guardar autenticación
+        localStorage.setItem('authToken', 'authenticated');
+        localStorage.setItem('username', cleanUsername);
+        
+        // Redirección con toast de confirmación
+        present({
+          message: `Bienvenido ${cleanUsername}!`,
+          duration: 2000,
+          color: 'success'
+        });
+        
+        router.push('/tab2', 'root');
+      } else {
+        present({
+          message: 'Usuario o contraseña incorrectos',
+          duration: 3000,
+          color: 'danger',
+          buttons: [{ text: 'OK' }]
+        });
+      }
+      setIsLoading(false);
+    }, 1000); // Simular tiempo de espera
+  };
+
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
+        <IonToolbar color="primary">
+          <IonTitle>EcoAsturias</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 3 page" />
+
+      <IonContent className="ion-padding">
+        <div className="login-container">
+          <form onSubmit={handleLogin}>
+            <IonItem>
+              <IonLabel position="floating">Usuario</IonLabel>
+              <IonInput
+                type="text"
+                value={username}
+                onIonChange={e => setUsername(e.detail.value!)}
+                required
+                autocomplete="username"
+                disabled={isLoading}
+              />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel position="floating">Contraseña</IonLabel>
+              <IonInput
+                type="password"
+                value={password}
+                onIonChange={e => setPassword(e.detail.value!)}
+                required
+                autocomplete="current-password"
+                disabled={isLoading}
+              />
+            </IonItem>
+
+            <IonButton 
+              type="submit" 
+              expand="block" 
+              className="ion-margin-top"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Verificando...' : 'Iniciar Sesión'}
+            </IonButton>
+          </form>
+        </div>
+
+        <IonLoading 
+          isOpen={isLoading}
+          message="Verificando credenciales..."
+          spinner="crescent"
+        />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab3;
+export default Login;

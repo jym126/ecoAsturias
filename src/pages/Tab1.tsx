@@ -1,25 +1,58 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
+import React, { useState } from "react";
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonFooter,
+  IonItem,
+  IonInput,
+  IonButton,
+  IonList,
+} from "@ionic/react";
+import "./Tab1.css";
 
-const Tab1: React.FC = () => {
+const Chat: React.FC = () => {
+  const [messages, setMessages] = useState<{ id: number; text: string; sender: string }[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const sendMessage = () => {
+    if (newMessage.trim() === "") return;
+    setMessages([...messages, { id: messages.length + 1, text: newMessage, sender: "yo" }]);
+    setNewMessage("");
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>Chat</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+      <IonContent>
+        <IonList className="chat-container">
+          {messages.map((msg) => (
+            <div key={msg.id} className={`chat-bubble ${msg.sender}`}>
+              {msg.text}
+            </div>
+          ))}
+        </IonList>
       </IonContent>
+      <IonFooter>
+        <IonToolbar>
+          <IonItem className="input-container">
+            <IonInput
+              placeholder="Escribe un mensaje..."
+              value={newMessage}
+              onIonChange={(e) => setNewMessage(e.detail.value!)}
+            />
+            <IonButton onClick={sendMessage}>Enviar</IonButton>
+          </IonItem>
+        </IonToolbar>
+      </IonFooter>
     </IonPage>
   );
 };
 
-export default Tab1;
+export default Chat;
