@@ -1,30 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonGrid,
   IonRow,
   IonCol,
+  IonModal,
   IonButton,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
   IonIcon,
 } from "@ionic/react";
 import "./Tab2.css";
 
 const Categoría: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalUrl, setModalUrl] = useState("");
+
+  const openModal = (url: string) => {
+    setModalUrl(url);
+    setShowModal(true);
+  };
+
   return (
     <IonPage className="page">
-      {/* <IonHeader className="header ion-no-border">
-        <IonToolbar className="toolbar">
-          <IonTitle className="title">EcoAsturias</IonTitle>
-          <img src="titulo.png" alt="titulo" />
-        </IonToolbar>
-      </IonHeader> */}
       <IonContent className="categoria-content">
         <div className="toolbar">
-          {/* <img className="toolbarImage" src="titulo.png" alt="titulo" /> */}
           <h1 className="title">EcoAsturias</h1>
           <img src="line.png" alt="titulo" />
         </div>
@@ -32,77 +34,90 @@ const Categoría: React.FC = () => {
         <IonGrid className="grid">
           <IonRow className="iconRow">
             <IonCol size="6">
-            <div className="image-container">
-                <a
-                  href="https://cogersa.es/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className="buttons" src="/recompensa.jpg" alt="Retos" />
-                </a>
+              <div className="image-container">
+                <img
+                  className="buttons"
+                  src="/recompensa.jpg"
+                  alt="Recompensa"
+                  onClick={() => openModal("https://cogersa.es/")}
+                />
               </div>
             </IonCol>
             <IonCol size="6">
-            <div className="image-container">
-                <a
-                  href="https://cogersa.es/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className="buttons" src="/cuestionario.jpg" alt="Retos" />
-                </a>
-              </div>
-            </IonCol>
-          </IonRow>
-          <IonRow className="iconRow">
-            <IonCol size="6">
-            <div className="image-container">
-                <a
-                  href="https://cogersa.es/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className="buttons" src="/reciclar.jpg" alt="Retos" />
-                </a>
-              </div>
-            </IonCol>
-            <IonCol size="6">
-            <div className="image-container">
-                <a
-                  href="https://cogersa.es/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className="buttons" src="/location.jpg" alt="Retos" />
-                </a>
+              <div className="image-container">
+                <img
+                  className="buttons"
+                  src="/cuestionario.jpg"
+                  alt="Cuestionario"
+                  onClick={() => openModal("https://cogersa.es/")}
+                />
               </div>
             </IonCol>
           </IonRow>
           <IonRow className="iconRow">
             <IonCol size="6">
               <div className="image-container">
-                <a
-                  href="https://cogersa.es/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className="buttons" src="/retos.jpg" alt="Retos" />
-                </a>
+                <img
+                  className="buttons"
+                  src="/reciclar.jpg"
+                  alt="Reciclar"
+                  onClick={() => openModal("https://cogersa.es/")}
+                />
               </div>
             </IonCol>
             <IonCol size="6">
-            <div className="image-container">
-                <a
-                  href="https://cogersa.es/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img className="buttons" src="/noticias.jpg" alt="Retos" />
-                </a>
+              <div className="image-container">
+                <img
+                  className="buttons"
+                  src="/location.jpg"
+                  alt="Ubicación"
+                  onClick={() => openModal("https://cogersa.es/")}
+                />
+              </div>
+            </IonCol>
+          </IonRow>
+          <IonRow className="iconRow">
+            <IonCol size="6">
+              <div className="image-container">
+                <img
+                  className="buttons"
+                  src="/retos.jpg"
+                  alt="Retos"
+                  onClick={() => openModal("https://cogersa.es/")}
+                />
+              </div>
+            </IonCol>
+            <IonCol size="6">
+              <div className="image-container">
+                <img
+                  className="buttons"
+                  src="/noticias.jpg"
+                  alt="Noticias"
+                  onClick={() => openModal("https://cogersa.es/")}
+                />
               </div>
             </IonCol>
           </IonRow>
         </IonGrid>
+
+        {/* 🔹 Modal para abrir enlaces */}
+        <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>EcoAsturias</IonTitle>
+              <IonButton slot="end" onClick={() => setShowModal(false)}>
+                Cerrar
+              </IonButton>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent>
+            <iframe
+              src={modalUrl}
+              title="Web"
+              style={{ width: "100%", height: "100vh", border: "none" }}
+            />
+          </IonContent>
+        </IonModal>
       </IonContent>
     </IonPage>
   );

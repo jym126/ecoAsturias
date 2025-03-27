@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   IonPage,
   IonHeader,
@@ -14,13 +14,23 @@ import {
 import "./Tab1.css";
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<{ id: number; text: string; sender: string }[]>([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState<{text: string, sender: string}[]>([]);
+  const inputRef = useRef<HTMLIonInputElement>(null);
 
   const sendMessage = () => {
-    if (newMessage.trim() === "") return;
-    setMessages([...messages, { id: messages.length + 1, text: newMessage, sender: "yo" }]);
-    setNewMessage("");
+    // Obtenemos el valor directamente del elemento input
+    const inputValue = inputRef.current?.value;
+    const messageText = String(inputValue || '').trim();
+    
+    if (!messageText) return;
+
+    // Añadimos el mensaje inmediatamente
+    setMessages(prev => [...prev, {text: messageText, sender: "yo"}]);
+    
+    // Limpiamos el input directamente
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
 
   return (
@@ -32,8 +42,8 @@ const Chat: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonList className="chat-container">
-          {messages.map((msg) => (
-            <div key={msg.id} className={`chat-bubble ${msg.sender}`}>
+          {messages.map((msg, index) => (
+            <div key={index} className={`chat-bubble ${msg.sender}`}>
               {msg.text}
             </div>
           ))}
@@ -43,11 +53,16 @@ const Chat: React.FC = () => {
         <IonToolbar>
           <IonItem className="input-container">
             <IonInput
+              ref={inputRef}
               placeholder="Escribe un mensaje..."
-              value={newMessage}
-              onIonChange={(e) => setNewMessage(e.detail.value!)}
+              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
             />
-            <IonButton onClick={sendMessage} color={"success"}>Enviar</IonButton>
+            <IonButton 
+              onClick={sendMessage} 
+              color={"success"}
+            >
+              Enviar
+            </IonButton>
           </IonItem>
         </IonToolbar>
       </IonFooter>
