@@ -95,7 +95,7 @@ const App: React.FC = () => {
             
             <IonTabButton 
               tab="tab2" 
-              href={isAuthenticated ? "/tab2" : "#"}
+              href={isAuthenticated ? "/tab2" : "tab3"}
               disabled={!isAuthenticated}
               className={!isAuthenticated ? 'disabled-tab' : ''}
             >
@@ -106,7 +106,7 @@ const App: React.FC = () => {
             <IonTabButton 
               tab="tab3" 
               onClick={handleAuthAction}
-              href={isAuthenticated ? "#" : "/tab3"}
+              href={isAuthenticated ? "tab2" : "/tab3"}
             >
               <IonIcon icon={isAuthenticated ? logOutOutline : logInOutline} />
               <IonLabel>{isAuthenticated ? 'Cerrar sesión' : 'Iniciar sesión'}</IonLabel>
