@@ -26,7 +26,7 @@ const Chat: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color={"success"}>
           <IonTitle>Chat</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -47,7 +47,7 @@ const Chat: React.FC = () => {
               value={newMessage}
               onIonChange={(e) => setNewMessage(e.detail.value!)}
             />
-            <IonButton onClick={sendMessage}>Enviar</IonButton>
+            <IonButton onClick={sendMessage} color={"success"}>Enviar</IonButton>
           </IonItem>
         </IonToolbar>
       </IonFooter>

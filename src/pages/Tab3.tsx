@@ -24,10 +24,11 @@ const Login: React.FC = () => {
 
   // Base de datos de usuarios (en producción usar backend)
   const usersDB = [
-    { username: 'ana', password: 'ana1234' },
-    { username: 'maria', password: 'maria1234' },
+    { username: 'carla', password: 'carla1234' },
+    { username: 'claudia', password: 'claudia1234' },
     { username: 'evelyn', password: 'evelyn1234' },
-    { username: 'rosa', password: 'rosa1234' }
+    { username: 'carlos', password: 'carlos1234' },
+    { username: 'diego', password: 'diego1234' }
   ];
 
   const handleLogin = (e: React.FormEvent) => {
@@ -72,10 +73,14 @@ const Login: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="primary">
+        <IonToolbar color="success">
           <IonTitle>EcoAsturias</IonTitle>
         </IonToolbar>
       </IonHeader>
+      <div className='logo-container'>
+      <img src="escudo.png" alt="EcoAsturias" className="logo" />
+      <h1>EcoAsturias</h1>
+      </div>
 
       <IonContent className="ion-padding">
         <div className="login-container">
@@ -109,6 +114,7 @@ const Login: React.FC = () => {
               expand="block" 
               className="ion-margin-top"
               disabled={isLoading}
+              color={'success'}
             >
               {isLoading ? 'Verificando...' : 'Iniciar Sesión'}
             </IonButton>

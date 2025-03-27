@@ -16,13 +16,19 @@ import "./Tab2.css";
 const Categoría: React.FC = () => {
   return (
     <IonPage className="page">
-      <IonHeader className="header ion-no-border">
+      {/* <IonHeader className="header ion-no-border">
         <IonToolbar className="toolbar">
           <IonTitle className="title">EcoAsturias</IonTitle>
+          <img src="titulo.png" alt="titulo" />
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent className="categoria-content">
-        <h2 className="categorias">Categorias</h2>
+        <div className="toolbar">
+          {/* <img className="toolbarImage" src="titulo.png" alt="titulo" /> */}
+          <h1 className="title">EcoAsturias</h1>
+          <img src="line.png" alt="titulo" />
+        </div>
+        <h2 className="categorias">Categorías</h2>
         <IonGrid className="grid">
           <IonRow className="iconRow">
             <IonCol size="6">
