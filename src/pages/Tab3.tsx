@@ -15,7 +15,7 @@ import {
 import React, { useRef, useState, useEffect } from 'react';
 import './Tab3.css';
 
-// Base de datos de usuarios (debe estar fuera del componente)
+// Base de datos de usuarios
 const usersDB = [
   { username: 'carla', password: 'carla1234' },
   { username: 'claudia', password: 'claudia1234' },
@@ -25,19 +25,20 @@ const usersDB = [
 ];
 
 const Login: React.FC = () => {
-  const usernameRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  // Cambia el tipo a HTMLIonInputElement
+  const usernameRef = useRef<HTMLIonInputElement>(null);
+  const passwordRef = useRef<HTMLIonInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [present] = useIonToast();
   const router = useIonRouter();
 
-  // Función de login
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
   
-    const cleanUsername = usernameRef.current?.value.trim() || "";
-    const cleanPassword = passwordRef.current?.value.trim() || "";
+    // Accede al valor usando .value en el elemento Ionic
+    const cleanUsername = usernameRef.current?.value?.toString().trim() || "";
+    const cleanPassword = passwordRef.current?.value?.toString().trim() || "";
   
     setTimeout(() => {
       const user = usersDB.find(u => 
@@ -54,11 +55,7 @@ const Login: React.FC = () => {
           color: 'success'
         });
   
-        // Opción 1: Redirección simple
         window.location.href = '/tab2';
-        
-        // Opción 2: Redirección con router (asegúrate que el router esté configurado)
-        // router.push('/tab2');
       } else {
         present({
           message: 'Usuario o contraseña incorrectos',
@@ -71,7 +68,6 @@ const Login: React.FC = () => {
     }, 1000);
   };
 
-  // Comprobar localStorage cuando el componente carga
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -102,15 +98,33 @@ const Login: React.FC = () => {
           <form onSubmit={handleLogin}>
             <IonItem>
               <IonLabel position="floating">Usuario</IonLabel>
-              <IonInput type="text" ref={usernameRef} required autocomplete="username" disabled={isLoading} />
+              <IonInput 
+                type="text" 
+                ref={usernameRef} 
+                required 
+                autocomplete="username" 
+                disabled={isLoading} 
+              />
             </IonItem>
 
             <IonItem>
               <IonLabel position="floating">Contraseña</IonLabel>
-              <IonInput type="password" ref={passwordRef} required autocomplete="current-password" disabled={isLoading} />
+              <IonInput 
+                type="password" 
+                ref={passwordRef} 
+                required 
+                autocomplete="current-password" 
+                disabled={isLoading} 
+              />
             </IonItem>
 
-            <IonButton type="submit" expand="block" className="ion-margin-top" disabled={isLoading} color={'success'}>
+            <IonButton 
+              type="submit" 
+              expand="block" 
+              className="ion-margin-top" 
+              disabled={isLoading} 
+              color={'success'}
+            >
               {isLoading ? 'Verificando...' : 'Iniciar Sesión'}
             </IonButton>
           </form>
