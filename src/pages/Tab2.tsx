@@ -66,10 +66,7 @@ const Categoría: React.FC = () => {
                     height="100%"
                     src="https://www.youtube.com/embed/YiHTNfKJwAw?autoplay=1&si=M3fapjFVxq7hSKYg" 
                     title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                   ></iframe>
                   
                   )} // Abre el modal con un iframe de la página web
