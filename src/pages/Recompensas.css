@@ -1,0 +1,39 @@
+/* Recompensas.css */
+
+/* Estilos generales */
+ion-card {
+    margin: 10px 0;
+  }
+  
+  /* Efecto para la recompensa */
+  .reward-unlock {
+    background-color: #4caf50; /* Verde brillante */
+    color: white;
+    transition: background-color 0.5s ease-in-out;
+  }
+  
+  .reward-card {
+    border: 2px solid #4caf50;
+    background-color: #e8f5e9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    animation: unlockReward 1s ease-in-out;
+  }
+  
+  /* Animación de desbloqueo de recompensa */
+  @keyframes unlockReward {
+    0% {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Estilos de los botones */
+  ion-button {
+    margin-top: 10px;
+  }
+  

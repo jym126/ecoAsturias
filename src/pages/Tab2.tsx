@@ -10,16 +10,16 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonIcon,
 } from "@ionic/react";
+import Recompensas from "./Recompensas"; // Asegúrate de que este componente esté bien importado
 import "./Tab2.css";
 
 const Categoría: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
-  const [modalUrl, setModalUrl] = useState("");
+  const [modalContent, setModalContent] = useState<JSX.Element | string>("");
 
-  const openModal = (url: string) => {
-    setModalUrl(url);
+  const openModal = (content: JSX.Element | string) => {
+    setModalContent(content);
     setShowModal(true);
   };
 
@@ -39,7 +39,7 @@ const Categoría: React.FC = () => {
                   className="buttons"
                   src="/recompensa.jpg"
                   alt="Recompensa"
-                  onClick={() => openModal("https://cogersa.es/")}
+                  onClick={() => openModal(<Recompensas />)} // Abre el modal con el componente de Recompensas
                 />
               </div>
             </IonCol>
@@ -49,7 +49,7 @@ const Categoría: React.FC = () => {
                   className="buttons"
                   src="/cuestionario.jpg"
                   alt="Cuestionario"
-                  onClick={() => openModal("https://cogersa.es/")}
+                  onClick={() => openModal("https://www.nationalgeographic.com.es/naturaleza/cuanto-sabes-sobre-reciclaje_12467") } // Abre el modal con un iframe de la página web
                 />
               </div>
             </IonCol>
@@ -61,7 +61,18 @@ const Categoría: React.FC = () => {
                   className="buttons"
                   src="/reciclar.jpg"
                   alt="Reciclar"
-                  onClick={() => openModal("https://cogersa.es/")}
+                  onClick={() => openModal(<iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/YiHTNfKJwAw?autoplay=1&si=M3fapjFVxq7hSKYg" 
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                  
+                  )} // Abre el modal con un iframe de la página web
                 />
               </div>
             </IonCol>
@@ -71,7 +82,7 @@ const Categoría: React.FC = () => {
                   className="buttons"
                   src="/location.jpg"
                   alt="Ubicación"
-                  onClick={() => openModal("https://cogersa.es/")}
+                  onClick={() => openModal("/puntoslimpios.jpg")}
                 />
               </div>
             </IonCol>
@@ -83,7 +94,7 @@ const Categoría: React.FC = () => {
                   className="buttons"
                   src="/retos.jpg"
                   alt="Retos"
-                  onClick={() => openModal("https://cogersa.es/")}
+                  onClick={() => openModal("https://federacionmunicipiosmurcia.es/los-retos-del-reciclaje-en-espana/")}
                 />
               </div>
             </IonCol>
@@ -93,14 +104,14 @@ const Categoría: React.FC = () => {
                   className="buttons"
                   src="/noticias.jpg"
                   alt="Noticias"
-                  onClick={() => openModal("https://cogersa.es/")}
+                  onClick={() => openModal("https://cogersa.es/noticias/") }
                 />
               </div>
             </IonCol>
           </IonRow>
         </IonGrid>
 
-        {/* 🔹 Modal para abrir enlaces */}
+        {/* Modal dinámico */}
         <IonModal isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
           <IonHeader>
             <IonToolbar>
@@ -111,11 +122,16 @@ const Categoría: React.FC = () => {
             </IonToolbar>
           </IonHeader>
           <IonContent>
-            <iframe
-              src={modalUrl}
-              title="Web"
-              style={{ width: "100%", height: "100vh", border: "none" }}
-            />
+            {/* Aquí verificamos el contenido que se pasa y renderizamos dinámicamente */}
+            {typeof modalContent === "string" ? (
+              <iframe
+                src={modalContent}
+                title="Web"
+                style={{ width: "100%", height: "100vh", border: "none" }}
+              />
+            ) : (
+              modalContent // Si es JSX.Element, simplemente lo mostramos
+            )}
           </IonContent>
         </IonModal>
       </IonContent>
